@@ -53,8 +53,17 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # ==========================================
 # 3. MULAI MLFLOW RUN
 # ==========================================
-# Kita set nama eksperimen agar rapi di dashboard
-# mlflow.set_experiment("Credit_Scoring_Experiment")
+# Tetapkan nama eksperimen
+experiment_name = "Credit_Scoring_Experiment"
+
+# Logika otomatis: Cek eksperimen, jika belum ada maka buat baru
+try:
+    exp = mlflow.get_experiment_by_name(experiment_name)
+    if exp is None:
+        mlflow.create_experiment(experiment_name)
+    mlflow.set_experiment(experiment_name)
+except Exception as e:
+    print(f"Info: Menggunakan default experiment karena: {e}")
 
 with mlflow.start_run():
     # A. LOG PARAMETER (Agar terekam settingan apa yang dipakai)
