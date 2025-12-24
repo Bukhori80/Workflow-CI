@@ -56,11 +56,15 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # Tetapkan nama eksperimen
 experiment_name = "Credit_Scoring_Experiment"
 
-# Logika otomatis: Cek eksperimen, jika belum ada maka buat baru
+# Logika krusial agar tidak error di GitHub Actions
 try:
+    # Cari ID eksperimen berdasarkan nama
     exp = mlflow.get_experiment_by_name(experiment_name)
     if exp is None:
+        # Jika tidak ada (seperti di GitHub), buat baru
         mlflow.create_experiment(experiment_name)
+    
+    # Set agar run masuk ke eksperimen ini
     mlflow.set_experiment(experiment_name)
 except Exception as e:
     print(f"Info: Menggunakan default experiment karena: {e}")

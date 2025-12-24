@@ -23,7 +23,7 @@ jobs:
         pip install mlflow pandas scikit-learn
 
     # 4. Jalankan Model (Masuk ke folder MLProject dulu)
-    - name: Run MLflow Project
+    - name: Run Model Training
       run: |
-        cd MLProject
-        mlflow run . --env-manager=local
+          cd MLProject
+          mlflow run . --env-manager=local --experiment-name Credit_Scoring_Experiment
